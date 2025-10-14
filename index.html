@@ -1,79 +1,184 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Welcome | DigitalDen.shop</title>
+  <title>Hackers Workshop — X Group</title>
   <style>
-    /* Reset */
+    @import url('https://fonts.googleapis.com/css2?family=Rubik+Glitch&display=swap');
+
+    :root {
+      --neon-green: #00ffcc;
+      --neon-blue: #0088aa;
+      --neon-red: #ff0033;
+    }
+
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
-      font-family: 'Poppins', sans-serif;
+    }
+
+    html, body {
+      height: 100%;
+      background: #000;
+      font-family: 'Rubik Glitch', sans-serif;
+      color: var(--neon-green);
+      overflow: hidden;
     }
 
     body {
-      min-height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
-      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
-      color: #ffffff;
-      overflow: hidden;
+      flex-direction: column;
     }
 
     .container {
       text-align: center;
-      padding: 3rem;
+      background: rgba(0, 0, 0, 0.8);
+      border: 1px solid rgba(0, 255, 204, 0.15);
+      padding: 3rem 2rem;
       border-radius: 20px;
-      background: rgba(255, 255, 255, 0.08);
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-      backdrop-filter: blur(10px);
-      animation: fadeIn 2s ease;
-      max-width: 90%;
-      width: 600px;
+      box-shadow: 0 0 15px rgba(0, 255, 204, 0.2);
+      backdrop-filter: blur(8px);
+      width: 90%;
+      max-width: 800px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .logo {
+      width: 130px;
+      height: 130px;
+      margin: 0 auto 1.8rem;
+      background: url('logo.jpeg') center/contain no-repeat;
+      border-radius: 50%;
+      border: 1px solid rgba(0, 255, 204, 0.25);
+      box-shadow: 0 0 8px rgba(0, 255, 204, 0.25);
+    }
+
+    h1, h2, h3, h4 {
+      text-transform: uppercase;
+      margin: 0.6rem 0;
+      letter-spacing: 3px;
+      text-shadow: 0 0 2px var(--neon-green), 0 0 3px var(--neon-blue);
+      font-weight: 300;
     }
 
     h1 {
-      font-size: 2.5rem;
-      letter-spacing: 1px;
-      margin-bottom: 1rem;
-      color: #00eaff;
-      text-shadow: 0 0 10px rgba(0, 234, 255, 0.6);
-      animation: glow 2s infinite alternate;
+      font-size: clamp(2.5rem, 8vw, 5rem);
+      color: var(--neon-green);
     }
 
-    p {
-      font-size: 1.1rem;
-      color: #e0e0e0;
-      line-height: 1.6;
+    h2 {
+      font-size: clamp(1.5rem, 5.5vw, 2.8rem);
+      color: var(--neon-blue);
     }
 
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
+    h3 {
+      font-size: clamp(2rem, 7vw, 4rem);
+      color: var(--neon-green);
     }
 
-    @keyframes glow {
-      from { text-shadow: 0 0 10px #00eaff; }
-      to { text-shadow: 0 0 20px #00ffff; }
+    h4 {
+      margin-top: 2.5rem;
+      font-size: clamp(1.4rem, 4vw, 2rem);
+      color: var(--neon-red);
+      text-shadow: 0 0 5px var(--neon-red), 0 0 10px var(--neon-red);
+      animation: flicker 2.5s infinite;
+      font-weight: 300;
     }
 
-    @media (max-width: 600px) {
-      h1 {
-        font-size: 2rem;
+    @keyframes flicker {
+      0%, 18%, 22%, 25%, 53%, 57%, 100% { opacity: 1; }
+      20%, 24%, 55% { opacity: 0.3; }
+    }
+
+    .tagline {
+      margin-top: 1rem;
+      font-size: clamp(1rem, 2.5vw, 1.3rem);
+      color: rgba(255, 255, 255, 0.7);
+      letter-spacing: 2px;
+      font-weight: 200;
+    }
+
+    canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        padding: 2.5rem 1.5rem;
       }
-      p {
-        font-size: 1rem;
+      .logo {
+        width: 100px;
+        height: 100px;
       }
+    }
+
+    @media (max-width: 480px) {
+      h1 { font-size: 2rem; }
+      h2 { font-size: 1.4rem; }
+      h3 { font-size: 1.8rem; }
+      h4 { font-size: 1.1rem; }
+      .tagline { font-size: 0.9rem; }
+      .logo { width: 85px; height: 85px; }
     }
   </style>
 </head>
 <body>
+  <canvas id="matrixCanvas"></canvas>
   <div class="container">
-    <h1>Welcome to DigitalDen.shop</h1>
-    <p>This website is created by <strong>Muhammad Hadi</strong> — crafted with creativity and passion for digital innovation.</p>
+    <div class="logo"></div>
+    <h1>WELCOME</h1>
+    <h2>TO THE</h2>
+    <h3>HACKERS WORKSHOP</h3>
+    <div class="tagline">A professional cybersecurity community by X Group</div>
+    <h4>COMING SOON...</h4>
   </div>
+
+  <script>
+    const canvas = document.getElementById('matrixCanvas');
+    const ctx = canvas.getContext('2d');
+
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    resizeCanvas();
+
+    const letters = '01#@$%&*';
+    const fontSize = 16;
+    let columns = Math.floor(canvas.width / fontSize);
+    const drops = Array(columns).fill(1);
+
+    function draw() {
+      ctx.fillStyle = 'rgba(0, 0, 0, 0.08)';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = '#00ffcc';
+      ctx.font = fontSize + 'px monospace';
+      for (let i = 0; i < drops.length; i++) {
+        const text = letters.charAt(Math.floor(Math.random() * letters.length));
+        ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+        if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+          drops[i] = 0;
+        }
+        drops[i]++;
+      }
+    }
+
+    setInterval(draw, 35);
+
+    window.addEventListener('resize', () => {
+      resizeCanvas();
+      columns = Math.floor(canvas.width / fontSize);
+    });
+  </script>
 </body>
 </html>
