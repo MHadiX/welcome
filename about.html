@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Hackers Workshop — X Group</title>
+  <title>About — Hackers Workshop</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Rubik+Glitch&display=swap');
 
@@ -72,74 +72,52 @@
       color: var(--neon-green);
     }
 
-    .container {
-      text-align: center;
+    .content {
       margin-top: 120px;
-      background: rgba(0, 0, 0, 0.8);
-      border: 1px solid rgba(0, 255, 204, 0.15);
-      padding: 3rem 2rem;
-      border-radius: 20px;
-      box-shadow: 0 0 15px rgba(0, 255, 204, 0.2);
-      backdrop-filter: blur(8px);
       width: 90%;
-      max-width: 800px;
-      position: relative;
+      max-width: 900px;
+      background: rgba(0, 0, 0, 0.8);
+      border: 1px solid rgba(0, 255, 204, 0.2);
+      border-radius: 20px;
+      padding: 2.5rem;
+      box-shadow: 0 0 15px rgba(0, 255, 204, 0.2);
+      text-align: center;
       z-index: 2;
     }
 
-    .logo {
-      width: 130px;
-      height: 130px;
-      margin: 0 auto 1.8rem;
-      background: url('logo.jpeg') center/contain no-repeat;
-      border-radius: 50%;
-      border: 1px solid rgba(0, 255, 204, 0.25);
-      box-shadow: 0 0 8px rgba(0, 255, 204, 0.25);
-    }
-
-    h1, h2, h3, h4 {
-      text-transform: uppercase;
-      margin: 0.6rem 0;
-      letter-spacing: 3px;
-      text-shadow: 0 0 2px var(--neon-green), 0 0 3px var(--neon-blue);
-      font-weight: 300;
-    }
-
     h1 {
-      font-size: clamp(2.5rem, 8vw, 5rem);
       color: var(--neon-green);
+      text-shadow: 0 0 0px var(--neon-green), 0 0 0px var(--neon-blue);
+      margin-bottom: 1.5rem;
+      font-size: clamp(1rem, 6vw, 2rem);
+      letter-spacing: 2px;
+    }
+
+    p {
+      color: rgba(255, 255, 255, 0.8);
+      font-size: clamp(1rem, 2vw, 1.2rem);
+      line-height: 1.7;
+      letter-spacing: 1px;
+      margin-bottom: 1rem;
     }
 
     h2 {
-      font-size: clamp(1.5rem, 5.5vw, 2.8rem);
       color: var(--neon-blue);
+      font-size: clamp(1.5rem, 4vw, 2rem);
+      margin: 2rem 0 1rem;
+      text-shadow: 0 0 4px var(--neon);
     }
 
-    h3 {
-      font-size: clamp(2rem, 7vw, 4rem);
-      color: var(--neon-green);
+    ul {
+      list-style: none;
+      padding: 0;
     }
 
-    h4 {
-      margin-top: 2.5rem;
-      font-size: clamp(1.4rem, 4vw, 2rem);
-      color: var(--neon-red);
-      text-shadow: 0 0 5px var(--neon-red), 0 0 10px var(--neon-red);
-      animation: flicker 2.5s infinite;
-      font-weight: 300;
-    }
-
-    @keyframes flicker {
-      0%, 18%, 22%, 25%, 53%, 57%, 100% { opacity: 1; }
-      20%, 24%, 55% { opacity: 0.3; }
-    }
-
-    .tagline {
-      margin-top: 1rem;
-      font-size: clamp(1rem, 2.5vw, 1.3rem);
-      color: rgba(255, 255, 255, 0.7);
-      letter-spacing: 2px;
-      font-weight: 200;
+    li {
+      color: rgba(255, 255, 255, 0.8);
+      margin-bottom: 0.8rem;
+      font-size: clamp(1rem, 2vw, 1.1rem);
+      text-align: left;
     }
 
     canvas {
@@ -151,25 +129,10 @@
       z-index: 0;
     }
 
-    @media (max-width: 768px) {
-      nav ul {
-        gap: 1rem;
+    @media (max-width: 600px) {
+      .content {
+        padding: 1.5rem;
       }
-      nav ul li a {
-        font-size: 0.9rem;
-      }
-      .container {
-        padding: 2.5rem 1.5rem;
-      }
-    }
-
-    @media (max-width: 480px) {
-      h1 { font-size: 2rem; }
-      h2 { font-size: 1.4rem; }
-      h3 { font-size: 1.8rem; }
-      h4 { font-size: 1.1rem; }
-      .tagline { font-size: 0.9rem; }
-      .logo { width: 85px; height: 85px; }
     }
   </style>
 </head>
@@ -183,13 +146,22 @@
   </nav>
 
   <canvas id="matrixCanvas"></canvas>
-  <div class="container">
-    <div class="logo"></div>
-    <h1>WELCOME</h1>
-    <h2>TO THE</h2>
-    <h3>HACKERS WORKSHOP</h3>
-    <div class="tagline">A professional cybersecurity community by </h><span style="color: red;">X Group</span></div>
-    <h4>COMING SOON...</h4>
+
+  <div class="content">
+    <h1>About Hackers Workshop</h1>
+    <p>Hackers Workshop is an initiative by <strong><span style="color: red;">X Group</span></strong> — a professional cybersecurity community dedicated to educating and guiding individuals passionate about ethical hacking and digital defense.</p>
+    <p>We focus on practical learning, hands-on training, and real-world cybersecurity challenges to build the next generation of experts in the field.</p>
+
+    <h2>Our Mission</h2>
+    <p>To create a community of highly skilled cybersecurity professionals who can contribute to a safer digital world by mastering the art of ethical hacking and security testing.</p>
+
+    <h2>What We Offer</h2>
+    <ul>
+      <li>📘 A structured cybersecurity roadmap for beginners to advanced learners</li>
+      <li>🧠 Hands-on labs and real-world practice through guided challenges</li>
+      <li>💬 Community mentorship from experienced members</li>
+      <li>🎯 Selection of top candidates for the elite <strong>X Group</strong></li>
+    </ul>
   </div>
 
   <script>
