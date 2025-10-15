@@ -6,6 +6,7 @@
   <title>Progress | Hackers Workshop</title>
   <link href="https://fonts.googleapis.com/css2?family=Rubik+Glitch&display=swap" rel="stylesheet">
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
     :root {
       --neon-green: #00ffcc;
       --neon-blue: #0088aa;
@@ -89,12 +90,22 @@
       position: relative;
       z-index: 2;
     }
+    .table-wrapper {
+  overflow-x: auto;
+  overflow-y: auto;
+  max-height: 70vh; /* keeps table scrollable vertically */
+  border: 1px solid rgba(0, 255, 204, 0.25);
+  border-radius: 10px;
+  scrollbar-color: #00ffcc #000; /* neon hacker scrollbars */
+  scrollbar-width: thin;
+}
+
 
     h1 {
       text-align: center;
       font-size: clamp(2rem, 6vw, 3rem);
       color: var(--neon-green);
-      text-shadow: 0 0 8px var(--neon-green);
+      text-shadow: 0 0 8px var();
       margin-bottom: 2rem;
       letter-spacing: 3px;
       text-transform: uppercase;
@@ -150,6 +161,11 @@
         font-size: 0.85rem;
       }
     }
+    .bebas-neue-regular {
+  font-family: "Bebas Neue", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+    }
   </style>
 </head>
 <body>
@@ -165,11 +181,13 @@
   <canvas id="matrixCanvas"></canvas>
 
   <div class="container">
-    <h1>Community Progress Board</h1>
+    <h1 class="bebas-neue-regular"><b>Community Progress Board</b></h1>
+    <div class="table-wrapper">
     <table id="progress-table">
       <thead id="table-head"></thead>
       <tbody id="table-body"></tbody>
     </table>
+    </div>
   </div>
 
   <script>
