@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Progress | Hackers Workshop</title>
+  <link href="https://fonts.googleapis.com/css2?family=Rubik+Glitch&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --neon-green: #00ffcc;
+      --neon-blue: #0088aa;
+      --neon-red: #ff0033;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      height: 100%;
+      background: #000;
+      font-family: 'Rubik Glitch', sans-serif;
+      color: var(--neon-green);
+      overflow-x: hidden;
+    }
+
+    /* NAVBAR */
+    nav {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+      background: rgba(0, 0, 0, 0.8);
+      border-bottom: 1px solid rgba(0, 255, 204, 0.3);
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 1000;
+    }
+
+    nav .logo-text {
+      font-size: 1.5rem;
+      color: var(--neon-red);
+      text-shadow: 0 0 4px var(--neon-red);
+      letter-spacing: 2px;
+    }
+
+    nav ul {
+      display: flex;
+      list-style: none;
+      gap: 1.5rem;
+    }
+
+    nav ul li a {
+      color: var(--neon-blue);
+      text-decoration: none;
+      font-size: 1.1rem;
+      letter-spacing: 1px;
+      transition: color 0.3s ease;
+    }
+
+    nav ul li a:hover {
+      color: var(--neon-green);
+    }
+
+    /* BACKGROUND EFFECT */
+    canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+    }
+
+    /* CONTENT */
+    .container {
+      max-width: 1100px;
+      margin: 140px auto 60px;
+      background: rgba(0, 0, 0, 0.75);
+      padding: 2rem;
+      border-radius: 20px;
+      border: 1px solid rgba(0, 255, 204, 0.15);
+      box-shadow: 0 0 20px rgba(0, 255, 204, 0.25);
+      backdrop-filter: blur(8px);
+      position: relative;
+      z-index: 2;
+    }
+
+    h1 {
+      text-align: center;
+      font-size: clamp(2rem, 6vw, 3rem);
+      color: var(--neon-green);
+      text-shadow: 0 0 8px var(--neon-green);
+      margin-bottom: 2rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-family: monospace;
+      color: var(--neon-green);
+      font-size: 1rem;
+      overflow-x: auto;
+    }
+
+    th, td {
+      border: 1px solid rgba(0, 255, 204, 0.25);
+      padding: 12px;
+      text-align: center;
+    }
+
+    th {
+      background: rgba(0, 255, 204, 0.1);
+      color: var(--neon-green);
+      text-transform: uppercase;
+      font-weight: 400;
+      letter-spacing: 2px;
+    }
+
+    tr:nth-child(even) {
+      background: rgba(0, 255, 204, 0.05);
+    }
+
+    tr:hover {
+      background: rgba(0, 255, 204, 0.15);
+      transition: 0.3s ease;
+    }
+
+    @media (max-width: 768px) {
+      nav ul {
+        gap: 1rem;
+      }
+
+      nav ul li a {
+        font-size: 0.9rem;
+      }
+
+      .container {
+        padding: 1.5rem;
+        margin: 120px 1rem;
+      }
+
+      table, th, td {
+        font-size: 0.85rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="logo-text">X GROUP</div>
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="progress.html">Progress</a></li>
+    </ul>
+  </nav>
+
+  <canvas id="matrixCanvas"></canvas>
+
+  <div class="container">
+    <h1>Community Progress Board</h1>
+    <table id="progress-table">
+      <thead id="table-head"></thead>
+      <tbody id="table-body"></tbody>
+    </table>
+  </div>
+
+  <script>
+    // Matrix background animation
+    const canvas = document.getElementById('matrixCanvas');
+    const ctx = canvas.getContext('2d');
+
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+
+    resizeCanvas();
+
+    const letters = '01#@$%&*';
+    const fontSize = 16;
+    let columns = Math.floor(canvas.width / fontSize);
+    const drops = Array(columns).fill(1);
+
+    function draw() {
+      ctx.fillStyle = 'rgba(0, 0, 0, 0.08)';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = '#00ffcc';
+      ctx.font = fontSize + 'px monospace';
+      for (let i = 0; i < drops.length; i++) {
+        const text = letters.charAt(Math.floor(Math.random() * letters.length));
+        ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+        if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+          drops[i] = 0;
+        }
+        drops[i]++;
+      }
+    }
+
+    setInterval(draw, 35);
+
+    window.addEventListener('resize', () => {
+      resizeCanvas();
+      columns = Math.floor(canvas.width / fontSize);
+    });
+
+    // Fetch Google Sheet CSV and build table
+    const sheetURL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vS08vj4GWt3uSAtn0P0zx42Z4TMYq91lvDKJXVBDMvAfnw63jk1ZaLmlpa337lWmMMHFKVes0iibDkT/pub?output=csv';
+
+    fetch(sheetURL)
+      .then(res => res.text())
+      .then(data => {
+        const rows = data.split('\n').map(r => r.split(','));
+        const head = rows[0];
+        const body = rows.slice(1);
+
+        const headHTML = head.map(h => `<th>${h}</th>`).join('');
+        document.getElementById('table-head').innerHTML = `<tr>${headHTML}</tr>`;
+
+        const bodyHTML = body.map(r => `<tr>${r.map(c => `<td>${c}</td>`).join('')}</tr>`).join('');
+        document.getElementById('table-body').innerHTML = bodyHTML;
+      })
+      .catch(err => console.error('Error fetching sheet:', err));
+  </script>
+</body>
+</html>
