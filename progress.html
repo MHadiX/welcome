@@ -3,8 +3,12 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Progress | Hackers Workshop</title>
+  <title>Progress - Hackers Workshop</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Rubik+Glitch&display=swap" rel="stylesheet">
+  <script defer src="auth.js"></script>
+  <script defer src="main.js"></script>
+
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
     :root {
@@ -24,7 +28,6 @@
       background: #000;
       font-family: 'Rubik Glitch', sans-serif;
       color: var(--neon-green);
-      overflow-x: hidden;
     }
 
     /* NAVBAR */
@@ -45,7 +48,7 @@
     nav .logo-text {
       font-size: 1.5rem;
       color: var(--neon-red);
-      text-shadow: 0 0 4px var(--neon-red);
+      text-shadow: 0 0 4px var();
       letter-spacing: 2px;
     }
 
@@ -67,7 +70,7 @@
       color: var(--neon-green);
     }
 
-    /* BACKGROUND EFFECT */
+    /* BACKGROUND MATRIX EFFECT */
     canvas {
       position: fixed;
       top: 0;
@@ -77,86 +80,95 @@
       z-index: 0;
     }
 
-    /* CONTENT */
-    .container {
-      max-width: 1100px;
-      margin: 140px auto 60px;
-      background: rgba(0, 0, 0, 0.75);
-      padding: 2rem;
-      border-radius: 20px;
-      border: 1px solid rgba(0, 255, 204, 0.15);
-      box-shadow: 0 0 20px rgba(0, 255, 204, 0.25);
-      backdrop-filter: blur(8px);
+    /* CONTENT WRAPPERS */
+    .content {
+      margin-top: 120px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: calc(100vh - 120px);
+      flex-direction: column;
       position: relative;
       z-index: 2;
     }
-    .table-wrapper {
-  overflow-x: auto;
-  overflow-y: auto;
-  max-height: 70vh; /* keeps table scrollable vertically */
-  border: 1px solid rgba(0, 255, 204, 0.25);
-  border-radius: 10px;
-  scrollbar-color: #00ffcc #000; /* neon hacker scrollbars */
-  scrollbar-width: thin;
-}
 
-
-    h1 {
+    .box {
+      background: rgba(0, 0, 0, 0.8);
+      border: 1px solid rgba(0, 255, 204, 0.15);
+      padding: 3rem 2rem;
+      border-radius: 20px;
+      box-shadow: 0 0 15px rgba(0, 255, 204, 0.2);
+      backdrop-filter: blur(8px);
+      width: 90%;
+      max-width: 800px;
       text-align: center;
-      font-size: clamp(2rem, 6vw, 3rem);
+    }
+
+    /* LOGIN STYLES */
+    input {
+      background: #111;
       color: var(--neon-green);
-      text-shadow: 0 0 8px var();
-      margin-bottom: 2rem;
-      letter-spacing: 3px;
-      text-transform: uppercase;
+      border: 1px solid var(--neon-green);
+      padding: 10px;
+      margin: 10px 0;
+      width: 80%;
+      border-radius: 5px;
+      font-family: monospace;
+    }
+
+    button {
+      background: var(--neon-green);
+      color: #000;
+      padding: 10px 25px;
+      border: none;
+      border-radius: 5px;
+      font-weight: bold;
+      cursor: pointer;
+      letter-spacing: 1px;
+    }
+
+    button:hover { background: #06c906; }
+
+    /* TABLE */
+    .table-wrapper {
+      max-height: 400px;
+      overflow: auto;
+      margin-top: 20px;
+      border: 1px solid rgba(0, 255, 204, 0.25);
+      border-radius: 10px;
     }
 
     table {
       width: 100%;
       border-collapse: collapse;
-      font-family: monospace;
       color: var(--neon-green);
-      font-size: 1rem;
-      overflow-x: auto;
     }
 
     th, td {
-      border: 1px solid rgba(0, 255, 204, 0.25);
-      padding: 12px;
-      text-align: center;
+      border: 1px solid rgba(0, 255, 204, 0.3);
+      padding: 10px;
+      text-align: left;
+      font-family: monospace;
     }
 
     th {
       background: rgba(0, 255, 204, 0.1);
-      color: var(--neon-green);
-      text-transform: uppercase;
-      font-weight: 400;
-      letter-spacing: 2px;
+      position: sticky;
+      top: 0;
     }
 
-    tr:nth-child(even) {
-      background: rgba(0, 255, 204, 0.05);
-    }
-
-    tr:hover {
-      background: rgba(0, 255, 204, 0.15);
-      transition: 0.3s ease;
-    }
+    .hidden { display: none; }
 
     @media (max-width: 768px) {
       nav ul {
         gap: 1rem;
       }
-
       nav ul li a {
         font-size: 0.9rem;
       }
-
-      .container {
-        padding: 1.5rem;
-        margin: 120px 1rem;
+      .box {
+        padding: 2.5rem 1.5rem;
       }
-
       table, th, td {
         font-size: 0.85rem;
       }
@@ -165,7 +177,35 @@
   font-family: "Bebas Neue", sans-serif;
   font-weight: 400;
   font-style: normal;
-    }
+}
+/* CUSTOM SCROLLBAR (cyber neon style) */
+.table-wrapper::-webkit-scrollbar {
+  height: 10px;
+  width: 10px;
+}
+
+.table-wrapper::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.6);
+  border-radius: 10px;
+}
+
+.table-wrapper::-webkit-scrollbar-thumb {
+  background: var(--neon-green);
+  border-radius: 10px;
+  box-shadow: 0 0 8px var(--neon-green);
+}
+
+.table-wrapper::-webkit-scrollbar-thumb:hover {
+  background: var(--neon-blue);
+  box-shadow: 0 0 10px var(--neon-blue);
+}
+
+/* For Firefox */
+.table-wrapper {
+  scrollbar-width: thin;
+  scrollbar-color: var(--neon-green) rgba(0, 0, 0, 0.6);
+}
+
   </style>
 </head>
 <body>
@@ -180,26 +220,34 @@
 
   <canvas id="matrixCanvas"></canvas>
 
-  <div class="container">
-    <h1 class="bebas-neue-regular"><b>Community Progress Board</b></h1>
-    <div class="table-wrapper">
-    <table id="progress-table">
-      <thead id="table-head"></thead>
-      <tbody id="table-body"></tbody>
-    </table>
+  <div class="content">
+    <div class="box" id="loginBox">
+      <h2 class="bebas-neue-regular"><b>🔐 Access Progress Data</b></h2>
+      <input type="text" id="username" placeholder="Username" /><br />
+      <input type="password" id="password" placeholder="Password" /><br />
+      <button id="loginBtn">Login</button>
+      <p id="error" style="color:var(--neon-red);margin-top:10px;"></p>
+    </div>
+
+    <div class="box hidden" id="tableContainer">
+      <h2 class="bebas-neue-regular"><b>📊 Community Progress Board</b></h2>
+      <div class="table-wrapper">
+        <table id="progress-table">
+          <thead id="table-head"></thead>
+          <tbody id="table-body"></tbody>
+        </table>
+      </div>
     </div>
   </div>
 
   <script>
-    // Matrix background animation
+    // MATRIX BACKGROUND
     const canvas = document.getElementById('matrixCanvas');
     const ctx = canvas.getContext('2d');
-
     function resizeCanvas() {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
     }
-
     resizeCanvas();
 
     const letters = '01#@$%&*';
@@ -221,31 +269,11 @@
         drops[i]++;
       }
     }
-
     setInterval(draw, 35);
-
     window.addEventListener('resize', () => {
       resizeCanvas();
       columns = Math.floor(canvas.width / fontSize);
     });
-
-    // Fetch Google Sheet CSV and build table
-    const sheetURL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vS08vj4GWt3uSAtn0P0zx42Z4TMYq91lvDKJXVBDMvAfnw63jk1ZaLmlpa337lWmMMHFKVes0iibDkT/pub?output=csv';
-
-    fetch(sheetURL)
-      .then(res => res.text())
-      .then(data => {
-        const rows = data.split('\n').map(r => r.split(','));
-        const head = rows[0];
-        const body = rows.slice(1);
-
-        const headHTML = head.map(h => `<th>${h}</th>`).join('');
-        document.getElementById('table-head').innerHTML = `<tr>${headHTML}</tr>`;
-
-        const bodyHTML = body.map(r => `<tr>${r.map(c => `<td>${c}</td>`).join('')}</tr>`).join('');
-        document.getElementById('table-body').innerHTML = bodyHTML;
-      })
-      .catch(err => console.error('Error fetching sheet:', err));
   </script>
 </body>
 </html>
