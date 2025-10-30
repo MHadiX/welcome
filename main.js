@@ -70,17 +70,37 @@
 
 
   async function loadSheet() {
-    try {
-      const res = await fetch(SHEET_CSV);
-      if (!res.ok) throw new Error('Sheet fetch failed');
-      const text = await res.text();
-      const rows = parseCSV(text);
-      renderTable(rows);
-    } catch (e) {
-      console.error(e);
-      document.getElementById('table-body').innerHTML = `<tr><td colspan="99" style="color:#ff6666;text-align:center">Failed to load sheet</td></tr>`;
-    }
+  try {
+    const res = await fetch(SHEET_CSV);
+    if (!res.ok) throw new Error('Sheet fetch failed');
+    const text = await res.text();
+    const rows = parseCSV(text);
+
+    // ✅ Sort the data here (without touching the original sheet)
+    // rows[0] = header row
+    const header = rows[0];
+    const body = rows.slice(1);
+
+    // Example: sort by "Completed Rooms" (replace 3 with your column index, 0-based)
+    // Assuming column 3 (4th column) has numeric values you want in descending order
+    body.sort((a, b) => {
+      const valA = parseFloat(a[3]) || 0;
+      const valB = parseFloat(b[3]) || 0;
+      return valB - valA; // Descending order
+    });
+
+    // Combine header + sorted rows back together
+    const sortedRows = [header, ...body];
+
+    renderTable(sortedRows);
+
+  } catch (e) {
+    console.error(e);
+    document.getElementById('table-body').innerHTML =
+      `<tr><td colspan="99" style="color:#ff6666;text-align:center">Failed to load sheet</td></tr>`;
   }
+}
+
 
  
   loginBtn.addEventListener('click', (ev) => {
