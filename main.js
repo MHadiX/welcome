@@ -84,8 +84,8 @@
     // Example: sort by "Completed Rooms" (replace 3 with your column index, 0-based)
     // Assuming column 3 (4th column) has numeric values you want in descending order
     body.sort((a, b) => {
-      const valA = parseFloat(a[3]) || 0;
-      const valB = parseFloat(b[3]) || 0;
+      const valA = parseFloat(a[4]) || 0;
+      const valB = parseFloat(b[4]) || 0;
       return valB - valA; // Descending order
     });
 
